@@ -54,7 +54,7 @@
                 <span class="gradient-text">Employee Management & Geotracking System</span>
             </h1>
             <p class="text-slate-400 max-w-2xl mx-auto italic text-lg leading-relaxed border-l-2 border-blue-500/30 pl-6 text-left">
-                "A full-stack web-based system to automate employee attendance, leave management, manual corrections, eliminate proxy attendance and location-based verification with role-based dashboards for employees and managers."
+                "A full-stack web-based system to automate employee attendance, leave management, manual corrections, employee manager workflow, eliminate fraudulent attendance and location-based verification with role-based dashboards for employees and managers."
             </p>
         </section>
 
@@ -62,7 +62,7 @@
             <div class="glass p-10 rounded-[2.5rem] flex flex-col justify-center border-l-4 border-blue-600">
                 <h2 class="text-3xl font-extrabold mb-6">Problem Statement</h2>
                 <p class="text-slate-400 leading-relaxed text-justify">
-                    Traditional attendance systems are prone to manual errors, proxy attendance, lack of transparency, and poor tracking of work hours, breaks, and leaves. Organizations need a secure, automated, and location-verified system to ensure accurate attendance, improve productivity, and simplify HR workflows.
+                    Traditional attendance systems are prone to manual errors, fraudulent attendance, lack of transparency, and poor tracking of work hours, breaks, and leaves. Organizations need a secure, automated, and location-verified system to ensure accurate attendance, improve productivity, and simplify HR workflows.
                 </p>
             </div>
             <div class="space-y-6">
@@ -76,8 +76,7 @@
                     <h3 class="text-purple-400 font-bold text-xs uppercase tracking-widest mb-2">Innovation</h3>
                     <p class="text-sm text-slate-500 italic">
                         A unified platform with role-based dashboards, automated calculations, leave workflows, manual correction approvals, and geolocation-based attendance validation.
-                        The system integrates geolocation tracking to ensure employees mark attendance only from authorized locations, increasing authenticity and preventing misuse.
-Our system introduces a device-bound biometric verification mechanism using WebAuthn. Each user registers their device once using system-level biometrics (fingerprint / face / PIN). During punch-in, attendance can only be marked after successful biometric verification from the same registered device. This ensures that even if login credentials are shared, proxy attendance is not possible.
+                        The system integrates geolocation tracking to ensure employees mark attendance only from authorized locations, increasing authenticity and preventing misuse. It also has full time geolocation tracking so that location of employees can be tracked easily during working hours.
                     </p>
                 </div>
             </div>
@@ -90,14 +89,14 @@ Our system introduces a device-bound biometric verification mechanism using WebA
                     <i class="fas fa-database text-blue-500 text-3xl mb-4"></i>
                     <h3 class="font-bold mb-2 uppercase text-xs tracking-widest">Input / Data</h3>
                     <p class="text-sm text-slate-500">
-                        User profiles, system-level biometrics, attendance logs, break records, leave requests, manual entries, and geolocation data stored in PostgreSQL.
+                        User profiles, attendance logs, break records, leave requests, manual entries, and geolocation data stored in PostgreSQL.
                     </p>
                 </div>
                 <div class="glass p-8 rounded-3xl text-center">
                     <i class="fas fa-microchip text-purple-500 text-3xl mb-4"></i>
                     <h3 class="font-bold mb-2 uppercase text-xs tracking-widest">System Architecture</h3>
                     <p class="text-sm text-slate-500">
-                        React + Tailwind frontend, Node.js + Express backend, JWT authentication, WebAuthn based biometrics registration, REST APIs, OpenStreet Map and role-based access control.
+                        React + Tailwind frontend, Node.js + Express backend, JWT authentication, REST APIs, PostgreSQL Database, OpenStreet Map and role-based access control.
                     </p>
                 </div>
                 <div class="glass p-8 rounded-3xl text-center border-2 border-green-500/20 bg-green-500/5">
@@ -120,7 +119,7 @@ Our system introduces a device-bound biometric verification mechanism using WebA
                         <span class="text-blue-400 font-mono font-black text-3xl">+30%</span>
                     </div>
                     <p class="text-slate-500 text-sm italic text-justify leading-relaxed">
-                        The system reduces manual errors, improves attendance accuracy, automates leave approval, eliminates fraud attendance,  speeds up approval workflows, and provides real-time location visibility to managers compared to traditional manual or semi-automated systems.
+                        The system reduces manual errors, improves attendance accuracy, automates leave approval, eliminates fraudulent attendance,  speeds up approval workflows, and provides real-time location visibility to managers compared to traditional manual or semi-automated systems.
                     </p>
                 </div>
             </div>
