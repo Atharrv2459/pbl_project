@@ -92,19 +92,51 @@
                         User profiles, attendance logs, break records, leave requests, manual entries, and geolocation data stored in PostgreSQL.
                     </p>
                 </div>
-                <div class="glass p-8 rounded-3xl text-center">
-                    <i class="fas fa-microchip text-purple-500 text-3xl mb-4"></i>
-                    <h3 class="font-bold mb-2 uppercase text-xs tracking-widest">System Architecture</h3>
-                    <p class="text-sm text-slate-500">
-                        React + Tailwind frontend, Node.js + Express backend, JWT authentication, REST APIs, PostgreSQL Database, OpenStreet Map and role-based access control.
-                    </p>
-                </div>
+                <div class="glass p-8 rounded-3xl text-center border-2 border-purple-500/20 bg-purple-500/5">
+    <i class="fas fa-microchip text-purple-500 text-3xl mb-4"></i>
+    <h3 class="font-bold mb-4 uppercase text-xs tracking-widest text-purple-400">System Architecture</h3>
+
+    <p class="text-sm text-slate-400 mb-6 leading-relaxed">
+        The system follows a modular full-stack architecture using React + Tailwind for frontend, Node.js + Express for backend, PostgreSQL for data storage, JWT for authentication, WebAuthn for device-bound biometric verification, REST APIs for communication, and OpenStreetMap for geolocation validation.
+    </p>
+
+    <div class="text-left space-y-3 text-xs text-slate-400">
+        <div class="flex gap-2 items-start">
+            <span class="text-purple-400 font-black">1.</span>
+            <span>User logs in using JWT-based authentication.</span>
+        </div>
+        <div class="flex gap-2 items-start">
+            <span class="text-purple-400 font-black">2.</span>
+            <span>User registers device once using system biometrics (WebAuthn).</span>
+        </div>
+        <div class="flex gap-2 items-start">
+            <span class="text-purple-400 font-black">3.</span>
+            <span>During Punch-In, system verifies registered device + biometric.</span>
+        </div>
+        <div class="flex gap-2 items-start">
+            <span class="text-purple-400 font-black">4.</span>
+            <span>Location is validated using geolocation & map services.</span>
+        </div>
+        <div class="flex gap-2 items-start">
+            <span class="text-purple-400 font-black">5.</span>
+            <span>Attendance, breaks, leaves, and manual entries are stored in PostgreSQL.</span>
+        </div>
+        <div class="flex gap-2 items-start">
+            <span class="text-purple-400 font-black">6.</span>
+            <span>Managers review dashboards, approvals, and analytics in real time.</span>
+        </div>
+    </div>
+</div>
                 <div class="glass p-8 rounded-3xl text-center border-2 border-green-500/20 bg-green-500/5">
                     <i class="fab fa-github text-green-500 text-3xl mb-4"></i>
                     <h3 class="font-bold mb-4 uppercase text-xs tracking-widest text-green-400">Project Repository</h3>
                     <a href="https://github.com/Atharrv2459/Employee-management-system.git" target="_blank" class="px-6 py-2 bg-green-600 rounded-full text-[10px] font-black hover:bg-green-500 transition shadow-lg shadow-green-900/40">
                         VIEW CODE / DEMO
                     </a>
+                    
+                     <a href="https://docs.google.com/presentation/d/16qU3_YRQzAvq9EsQwmjH3YA7IuHKISCP/edit?usp=sharing&ouid=100619433515025825662&rtpof=true&sd=true" target="_blank"
+       class="px-6 py-2 bg-blue-600 rounded-full text-[10px] font-black hover:bg-blue-500 transition shadow-lg shadow-blue-900/40">
+        VIEW PPT
                 </div>
             </div>
         </section>
@@ -195,4 +227,5 @@
     </script>
 </body>
 </html>
+
 
