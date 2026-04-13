@@ -1,237 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PBL Presentation | Employee Management & Geotracking System</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { background-color: #020617; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .gradient-text { background: linear-gradient(90deg, #60a5fa, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PBL Presentation</title>
 
-        #timerContainer { background: #ffffff; color: #020617; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border: 3px solid #3b82f6; z-index: 1000; }
-        @keyframes flicker { 0%, 100% { background-color: #ffffff; } 50% { background-color: #fca5a5; } }
-        .timer-warning { animation: flicker 1s infinite; border: 3px solid #ef4444 !important; color: #b91c1c !important; }
-        .timer-stop { background-color: #991b1b !important; color: #ffffff !important; border: 3px solid #f87171 !important; animation: none; }
-    </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap");
+    body { background-color:#020617; color:#f8fafc; font-family:"Plus Jakarta Sans",sans-serif; scroll-behavior:smooth; }
+    .glass { background:rgba(255,255,255,0.03); backdrop-filter:blur(15px); border:1px solid rgba(255,255,255,0.1); }
+    .gradient-text { background:linear-gradient(90deg,#60a5fa,#a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    #timerContainer { background:#ffffff; color:#020617; box-shadow:0 10px 40px rgba(0,0,0,0.8); border:3px solid #3b82f6; z-index:1000; }
+    @keyframes flicker { 0%,100%{ background-color:#ffffff; } 50%{ background-color:#fca5a5; } }
+    .timer-warning { animation:flicker 1s infinite; border:3px solid #ef4444 !important; color:#b91c1c !important; }
+    .timer-stop { background-color:#991b1b !important; color:#ffffff !important; border:3px solid #f87171 !important; animation:none; }
+  </style>
 </head>
+
 <body onload="startTimer()">
+  <!-- Timer (for viva/presentation pacing) -->
+  <div id="timerContainer" class="fixed bottom-10 right-10 px-8 py-4 rounded-3xl flex items-center gap-4 transition-all">
+    <i class="fas fa-hourglass-start text-blue-600 text-2xl" id="timerIcon"></i>
+    <span id="displayTime" class="text-4xl font-black font-mono tracking-tighter">00:00</span>
+  </div>
 
-    <div id="timerContainer" class="fixed bottom-10 right-10 px-8 py-4 rounded-3xl flex items-center gap-4 transition-all">
-        <i class="fas fa-hourglass-start text-blue-600 text-2xl" id="timerIcon"></i>
-        <span id="displayTime" class="text-4xl font-black font-mono tracking-tighter">00:00</span>
+  <!-- Navbar -->
+  <nav class="fixed w-full z-50 glass border-b border-slate-800/50 px-8 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <div class="bg-white p-1 rounded flex items-center justify-center shadow-md" style="height:48px;width:48px;">
+        <img src="mujlogo.jpg" alt="MUJ" class="h-full w-auto object-contain" onerror="this.src='https://via.placeholder.com/50?text=MUJ'">
+      </div>
+      <div class="flex flex-col text-left">
+        <span class="text-xl font-black text-white leading-none uppercase tracking-tighter">PBL <span class="text-blue-500 italic">2026</span></span>
+        <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Dept. of Computer Science & Engineering</span>
+      </div>
     </div>
 
-    <nav class="fixed w-full z-50 glass border-b border-slate-800/50 px-8 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-4">
-            <div class="bg-white p-1 rounded flex items-center justify-center shadow-md" style="height: 48px; width: 48px;">
-                <img src="mujlogo.jpg" alt="MUJ" class="h-full w-auto object-contain" onerror="this.src='https://via.placeholder.com/50?text=MUJ'">
-            </div>
-            <div class="flex flex-col text-left">
-                <span class="text-xl font-black text-white leading-none uppercase tracking-tighter">PBL <span class="text-blue-500 italic">2026</span></span>
-                <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Dept. of Computer Science & Engineering</span>
-            </div>
-        </div>
-        <div class="hidden md:flex gap-8 text-[11px] uppercase tracking-widest font-bold opacity-70">
-            <a href="#problem" class="hover:text-blue-400 transition">Problem</a>
-            <a href="#methodology" class="hover:text-blue-400 transition">Methodology</a>
-            <a href="#results" class="hover:text-blue-400 transition">Results</a>
-            <a href="#team" class="hover:text-blue-400 transition">Credits</a>
-        </div>
-    </nav>
+    <div class="hidden md:flex gap-8 text-[11px] uppercase tracking-widest font-bold opacity-70">
+      <a href="#problem" class="hover:text-blue-400 transition">Problem</a>
+      <a href="#modules" class="hover:text-blue-400 transition">Modules</a>
+      <a href="#methodology" class="hover:text-blue-400 transition">Methodology</a>
+      <a href="#results" class="hover:text-blue-400 transition">Results</a>
+      <a href="#team" class="hover:text-blue-400 transition">Credits</a>
+    </div>
+  </nav>
 
-    <main class="max-w-6xl mx-auto px-6 pt-48 pb-32 space-y-32">
-        
-        <section class="text-center">
-            <div class="inline-block px-4 py-1 border border-slate-800 rounded-full text-slate-500 text-[10px] font-mono mb-6 uppercase tracking-widest">
-                ID: 23FE10CSE00267
-            </div>
-            <h1 class="text-5xl md:text-6xl font-extrabold mb-8 uppercase leading-tight">
-                <span class="gradient-text">Employee Management & Geotracking System</span>
-            </h1>
-            <p class="text-slate-400 max-w-2xl mx-auto italic text-lg leading-relaxed border-l-2 border-blue-500/30 pl-6 text-left">
-                "A full-stack web-based system to automate employee attendance, leave management, manual corrections, employee manager workflow, eliminate fraudulent attendance and location-based verification with role-based dashboards for employees and managers."
+  <main class="max-w-6xl mx-auto px-6 pt-48 pb-32 space-y-32">
+    <!-- Hero -->
+    <section class="text-center">
+      <div class="inline-block px-4 py-1 border border-slate-800 rounded-full text-slate-500 text-[10px] font-mono mb-6 uppercase tracking-widest">
+        ID: 23FE10CSE00267
+      </div>
+
+      <h1 class="text-5xl md:text-6xl font-extrabold mb-8 uppercase leading-tight">
+        <span class="gradient-text"> HR Solutions- Smart HRMS with Geoattendance & Recruitment Platform</span>
+      </h1>
+
+      <p class="text-slate-400 max-w-2xl mx-auto italic text-lg leading-relaxed border-l-2 border-blue-500/30 pl-6 text-left">
+        "A secure, role-based HR management system that automates attendance and leave workflows,
+        validates attendance with geolocation, supports shift & schedule management, and adds a
+        complete recruitment pipeline (jobs → applications → screening → interviews → offers),
+        with payroll tools and AI-assisted resume analysis."
+      </p>
+    </section>
+
+    <!-- Problem -->
+    <section id="problem" class="grid md:grid-cols-2 gap-12 items-stretch">
+      <div class="glass p-10 rounded-[2.5rem] flex flex-col justify-center border-l-4 border-blue-600">
+        <h2 class="text-3xl font-extrabold mb-6">Problem Statement</h2>
+        <p class="text-slate-400 leading-relaxed text-justify">
+          Traditional HR operations suffer from manual attendance errors, weak verification (buddy punching),
+          fragmented tools for leave/shift approvals, and slow recruitment tracking. Organizations need a unified,
+          secure platform that verifies attendance with location checks, supports employee-manager approval workflows,
+          centralizes recruitment & offer management, and provides analytics for HR decisions.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="glass p-7 rounded-3xl border-r-4 border-blue-500/50">
+          <h3 class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-2">Literature Review</h3>
+          <p class="text-sm text-slate-500 italic">
+            Manual registers, spreadsheets, and basic biometric systems lack end-to-end workflows,
+            real-time approvals, audit trails, and integrated hiring + HR operations.
+          </p>
+        </div>
+
+        <div class="glass p-7 rounded-3xl border-r-4 border-purple-500/50">
+          <h3 class="text-purple-400 font-bold text-xs uppercase tracking-widest mb-2">Innovation</h3>
+          <p class="text-sm text-slate-500 italic">
+            A single HRMS with role-based dashboards (Employee / Manager / HR),
+            geolocation-verified attendance, structured shift scheduling, leave + manual correction approvals,
+            and a recruitment pipeline with interviews and offer letters—plus AI resume analysis to speed up shortlisting.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modules -->
+    <section id="modules" class="space-y-12">
+      <h2 class="text-4xl font-black text-center uppercase tracking-tight">
+        Key <span class="text-blue-500">Modules</span>
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass p-8 rounded-3xl">
+          <div class="flex items-center gap-3 mb-3">
+            <i class="fas fa-location-crosshairs text-blue-500 text-2xl"></i>
+            <h3 class="font-black uppercase text-xs tracking-widest">Attendance + Geolocation</h3>
+          </div>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            Punch-in/out with location verification (authorized area). Logs attendance history,
+            break tracking, and real-time visibility for HR/Managers.
+          </p>
+        </div>
+
+        <div class="glass p-8 rounded-3xl">
+          <div class="flex items-center gap-3 mb-3">
+            <i class="fas fa-calendar-days text-purple-500 text-2xl"></i>
+            <h3 class="font-black uppercase text-xs tracking-widest">Shift & Scheduling</h3>
+          </div>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            Shift preferences, shift scheduling, location assignment, and department mapping to organize workforce planning.
+          </p>
+        </div>
+
+        <div class="glass p-8 rounded-3xl">
+          <div class="flex items-center gap-3 mb-3">
+            <i class="fas fa-file-signature text-green-500 text-2xl"></i>
+            <h3 class="font-black uppercase text-xs tracking-widest">Leave + Approvals</h3>
+          </div>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            Leave requests and approvals with manager workflow. Manual attendance entry/correction requests
+            with audit-friendly tracking.
+          </p>
+        </div>
+
+        <div class="glass p-8 rounded-3xl">
+          <div class="flex items-center gap-3 mb-3">
+            <i class="fas fa-user-tie text-blue-400 text-2xl"></i>
+            <h3 class="font-black uppercase text-xs tracking-widest">HR Panel</h3>
+          </div>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            HR dashboard to manage employees, departments, locations, policies, and organization-wide insights.
+          </p>
+        </div>
+
+        <div class="glass p-8 rounded-3xl">
+          <div class="flex items-center gap-3 mb-3">
+            <i class="fas fa-briefcase text-purple-400 text-2xl"></i>
+            <h3 class="font-black uppercase text-xs tracking-widest">Recruitment Pipeline</h3>
+          </div>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            Job postings, applications, screening questions, interview scheduling (panelists + feedback),
+            and offer letter management with status tracking.
+          </p>
+        </div>
+
+        <div class="glass p-8 rounded-3xl">
+          <div class="flex items-center gap-3 mb-3">
+            <i class="fas fa-indian-rupee-sign text-green-400 text-2xl"></i>
+            <h3 class="font-black uppercase text-xs tracking-widest">Payroll Tools</h3>
+          </div>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            Salary structures, payroll processing support, and HR-driven salary/compensation workflows (as per system modules).
+          </p>
+        </div>
+
+        <div class="glass p-8 rounded-3xl md:col-span-3 border border-purple-500/20 bg-purple-500/5">
+          <div class="flex items-center gap-3 mb-3">
+            <i class="fas fa-wand-magic-sparkles text-purple-500 text-2xl"></i>
+            <h3 class="font-black uppercase text-xs tracking-widest text-purple-300">AI Resume Analysis (Gemini)</h3>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            AI-assisted resume vs job-requirements matching for faster screening, improved consistency, and better shortlisting insights.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Methodology -->
+    <section id="methodology" class="space-y-12">
+      <h2 class="text-4xl font-black text-center uppercase tracking-tight">
+        System <span class="text-blue-500">Methodology</span>
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass p-8 rounded-3xl text-center">
+          <i class="fas fa-database text-blue-500 text-3xl mb-4"></i>
+          <h3 class="font-bold mb-2 uppercase text-xs tracking-widest">Data Layer</h3>
+          <p class="text-sm text-slate-500">
+            PostgreSQL stores employees, attendance logs, breaks, leaves, shifts, locations, recruitment pipeline entities, and payroll metadata.
+          </p>
+        </div>
+
+        <div class="glass p-8 rounded-3xl text-center border-2 border-purple-500/20 bg-purple-500/5">
+          <i class="fas fa-microchip text-purple-500 text-3xl mb-4"></i>
+          <h3 class="font-bold mb-4 uppercase text-xs tracking-widest text-purple-400">Architecture</h3>
+
+          <p class="text-sm text-slate-400 mb-6 leading-relaxed">
+            React + Tailwind (UI), Node.js + Express (API), PostgreSQL (DB), JWT auth, and WebAuthn device-bound verification.
+            Geolocation is used for attendance validation, and the HR panel manages end-to-end workflows.
+          </p>
+
+          <div class="text-left space-y-3 text-xs text-slate-400">
+            <div class="flex gap-2 items-start"><span class="text-purple-400 font-black">1.</span><span>Role-based login (Employee / Manager / HR) via JWT.</span></div>
+            <div class="flex gap-2 items-start"><span class="text-purple-400 font-black">2.</span><span>Attendance actions validated with location checks.</span></div>
+            <div class="flex gap-2 items-start"><span class="text-purple-400 font-black">3.</span><span>Leave + manual corrections go through approval workflow.</span></div>
+            <div class="flex gap-2 items-start"><span class="text-purple-400 font-black">4.</span><span>Recruitment pipeline tracks applications → interviews → offers.</span></div>
+            <div class="flex gap-2 items-start"><span class="text-purple-400 font-black">5.</span><span>Dashboards provide analytics + audit-friendly logs.</span></div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3 items-center justify-center">
+          <a href="https://github.com/Atharrv2459/Employee-management-system.git" target="_blank"
+             class="px-6 py-2 bg-green-600 rounded-full text-[10px] font-black hover:bg-green-500 transition shadow-lg shadow-green-900/40">
+            VIEW CODE / DEMO
+          </a>
+
+          <!-- Replace with your real PPT link -->
+          <a href="https://drive.google.com/your-ppt-link-here" target="_blank"
+             class="px-6 py-2 bg-blue-600 rounded-full text-[10px] font-black hover:bg-blue-500 transition shadow-lg shadow-blue-900/40">
+            VIEW PPT (Google Drive)
+          </a>
+
+          <a href="https://docs.google.com/document/d/1Tc6YPZdNRTmqMP3bxcaJ7z6p-JqhQjij/edit?usp=sharing&ouid=100619433515025825662&rtpof=true&sd=true" target="_blank"
+             class="px-6 py-2 bg-purple-600 rounded-full text-[10px] font-black hover:bg-purple-500 transition shadow-lg shadow-purple-900/40">
+            VIEW API DOCUMENTATION
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section id="results" class="glass p-12 rounded-[3.5rem] border-t-4 border-blue-500">
+      <h2 class="text-3xl font-black mb-12 text-center uppercase tracking-tight">
+        Results & <span class="text-blue-500">Analysis</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="h-80"><canvas id="resultsChart"></canvas></div>
+
+        <div class="space-y-6">
+          <div class="p-6 rounded-2xl bg-white/5 flex justify-between items-center border border-white/10 shadow-inner">
+            <span class="text-slate-400 font-bold uppercase text-xs tracking-widest">Workflow Time Reduction</span>
+            <span class="text-blue-400 font-mono font-black text-3xl">Faster</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white/5 border border-white/10 shadow-inner">
+            <p class="text-slate-500 text-sm italic text-justify leading-relaxed">
+              The platform reduces manual HR effort by centralizing attendance, approvals, workforce scheduling,
+              recruitment tracking, and offer management in one system. Location verification improves authenticity
+              and reduces misuse compared to traditional manual or spreadsheet-based approaches.
             </p>
-        </section>
+          </div>
 
-        <section id="problem" class="grid md:grid-cols-2 gap-12 items-stretch">
-            <div class="glass p-10 rounded-[2.5rem] flex flex-col justify-center border-l-4 border-blue-600">
-                <h2 class="text-3xl font-extrabold mb-6">Problem Statement</h2>
-                <p class="text-slate-400 leading-relaxed text-justify">
-                    Traditional management systems are prone to manual errors, fraudulent attendance, lack of transparency, and poor tracking of work hours, breaks, and leaves. Organizations need a secure, automated, and location-verified system to ensure accurate attendance, improve productivity, location tracking during work hours and simplify HR workflows.
-                </p>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="p-5 rounded-2xl bg-white/5 border border-white/10">
+              <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Transparency</p>
+              <p class="text-slate-300 text-sm mt-2">Audit-friendly activity trails</p>
             </div>
-            <div class="space-y-6">
-                <div class="glass p-7 rounded-3xl border-r-4 border-blue-500/50">
-                    <h3 class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-2">Literature Review</h3>
-                    <p class="text-sm text-slate-500 italic">
-                        Manual registers, basic biometric systems, and spreadsheet-based tracking lack real-time monitoring, analytics and location verification of employees.
-                    </p>
-                </div>
-                <div class="glass p-7 rounded-3xl border-r-4 border-purple-500/50">
-                    <h3 class="text-purple-400 font-bold text-xs uppercase tracking-widest mb-2">Innovation</h3>
-                    <p class="text-sm text-slate-500 italic">
-                        A unified platform with role-based dashboards, automated calculations, leave workflows, manual correction approvals, and geolocation-based attendance validation.
-                        The system integrates geolocation tracking to ensure employees mark attendance only from authorized locations, increasing authenticity and preventing misuse. It also has full time geolocation tracking so that location of employees can be tracked easily during working hours.
-                    </p>
-                </div>
+            <div class="p-5 rounded-2xl bg-white/5 border border-white/10">
+              <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Scalability</p>
+              <p class="text-slate-300 text-sm mt-2">Modules expand HR operations</p>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <section id="methodology" class="space-y-12">
-            <h2 class="text-4xl font-black text-center uppercase tracking-tight">System <span class="text-blue-500">Methodology</span></h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass p-8 rounded-3xl text-center">
-                    <i class="fas fa-database text-blue-500 text-3xl mb-4"></i>
-                    <h3 class="font-bold mb-2 uppercase text-xs tracking-widest">Input / Data</h3>
-                    <p class="text-sm text-slate-500">
-                        User profiles, attendance logs, break records, leave requests, manual entries, and geolocation data stored in PostgreSQL.
-                    </p>
-                </div>
-                <div class="glass p-8 rounded-3xl text-center border-2 border-purple-500/20 bg-purple-500/5">
-    <i class="fas fa-microchip text-purple-500 text-3xl mb-4"></i>
-    <h3 class="font-bold mb-4 uppercase text-xs tracking-widest text-purple-400">System Architecture</h3>
+    <!-- Credits -->
+    <section id="team" class="text-center pt-10 border-t border-slate-900">
+      <h2 class="text-[10px] font-black text-slate-600 uppercase tracking-[0.5em] mb-12">Academic Credits</h2>
+      <div class="flex flex-wrap justify-center gap-10">
+        <div class="glass px-12 py-8 rounded-[2rem] border-b-4 border-blue-600">
+          <p class="text-[9px] font-bold text-blue-500 mb-2 uppercase tracking-widest">Project Guide</p>
+          <p class="font-black text-xl text-slate-100">Dr. Ajit Noonia</p>
+        </div>
 
-    <p class="text-sm text-slate-400 mb-6 leading-relaxed">
-        The system follows a modular full-stack architecture using React + Tailwind for frontend, Node.js + Express for backend, PostgreSQL for data storage, JWT for authentication, WebAuthn for device-bound biometric verification, REST APIs for communication, and OpenStreetMap for geolocation validation.
+        <div class="glass px-12 py-8 rounded-[2rem] border-b-4 border-slate-700">
+          <p class="text-[9px] font-bold text-slate-400 mb-2 uppercase tracking-widest">Student</p>
+          <p class="font-black text-xl text-slate-100">Atharrv Bhatnagar</p>
+          <p class="text-[10px] text-slate-500 mt-1">23FE10CSE00267</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-12 text-center bg-black/40 border-t border-slate-900">
+    <p class="text-slate-600 text-[10px] font-bold tracking-[0.3em] uppercase mb-2">Manipal University Jaipur</p>
+    <p class="text-slate-500 text-[9px] font-medium tracking-[0.2em] uppercase opacity-50">
+      Department of Computer Science & Engineering • 2026
     </p>
+  </footer>
 
-    <div class="text-left space-y-3 text-xs text-slate-400">
-        <div class="flex gap-2 items-start">
-            <span class="text-purple-400 font-black">1.</span>
-            <span>User logs in using JWT-based authentication.</span>
-        </div>
-        <div class="flex gap-2 items-start">
-            <span class="text-purple-400 font-black">2.</span>
-            <span>User registers device once using system biometrics (WebAuthn).</span>
-        </div>
-        <div class="flex gap-2 items-start">
-            <span class="text-purple-400 font-black">3.</span>
-            <span>During Punch-In, system verifies registered device + biometric.</span>
-        </div>
-        <div class="flex gap-2 items-start">
-            <span class="text-purple-400 font-black">4.</span>
-            <span>Location is validated using geolocation & map services.</span>
-        </div>
-        <div class="flex gap-2 items-start">
-            <span class="text-purple-400 font-black">5.</span>
-            <span>Attendance, breaks, leaves, and manual entries are stored in PostgreSQL.</span>
-        </div>
-        <div class="flex gap-2 items-start">
-            <span class="text-purple-400 font-black">6.</span>
-            <span>Managers review dashboards, approvals, and analytics in real time.</span>
-        </div>
-    </div>
-</div>
-               <div class="flex flex-col gap-3 items-center">
-    <a href="https://github.com/Atharrv2459/Employee-management-system.git" target="_blank"
-       class="px-6 py-2 bg-green-600 rounded-full text-[10px] font-black hover:bg-green-500 transition shadow-lg shadow-green-900/40">
-        VIEW CODE / DEMO
-    </a>
+  <script>
+    // TIMER LOGIC (10 minutes)
+    let sec = 0;
+    let timer = null;
 
-    <a href="https://drive.google.com/your-ppt-link-here" target="_blank"
-       class="px-6 py-2 bg-blue-600 rounded-full text-[10px] font-black hover:bg-blue-500 transition shadow-lg shadow-blue-900/40">
-        VIEW PPT (Google Drive)
-    </a>
+    function startTimer() {
+      timer = setInterval(() => {
+        sec++;
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        document.getElementById("displayTime").innerText =
+          `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 
-    <a href="https://docs.google.com/document/d/1Tc6YPZdNRTmqMP3bxcaJ7z6p-JqhQjij/edit?usp=sharing&ouid=100619433515025825662&rtpof=true&sd=true" target="_blank"
-       class="px-6 py-2 bg-purple-600 rounded-full text-[10px] font-black hover:bg-purple-500 transition shadow-lg shadow-purple-900/40">
-        VIEW API DOCUMENTATION
-    </a>
-</div>
-        </section>
-
-        <section id="results" class="glass p-12 rounded-[3.5rem] border-t-4 border-blue-500">
-            <h2 class="text-3xl font-black mb-12 text-center uppercase tracking-tight">Results & <span class="text-blue-500">Analysis</span></h2>
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="h-80"><canvas id="resultsChart"></canvas></div>
-                <div class="space-y-6">
-                    <div class="p-6 rounded-2xl bg-white/5 flex justify-between items-center border border-white/10 shadow-inner">
-                        <span class="text-slate-400 font-bold uppercase text-xs tracking-widest">Efficiency Improvement</span>
-                        <span class="text-blue-400 font-mono font-black text-3xl">+30%</span>
-                    </div>
-                    <p class="text-slate-500 text-sm italic text-justify leading-relaxed">
-                        The system reduces manual errors, improves attendance accuracy, automates leave approval, eliminates fraudulent attendance,  speeds up approval workflows, and provides real-time location visibility to managers compared to traditional manual or semi-automated systems.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="team" class="text-center pt-10 border-t border-slate-900">
-            <h2 class="text-[10px] font-black text-slate-600 uppercase tracking-[0.5em] mb-12">Academic Credits</h2>
-            <div class="flex flex-wrap justify-center gap-10">
-                <div class="glass px-12 py-8 rounded-[2rem] border-b-4 border-blue-600">
-                    <p class="text-[9px] font-bold text-blue-500 mb-2 uppercase tracking-widest">Project Guide</p>
-                    <p class="font-black text-xl text-slate-100">Dr. Ajit Noonia</p>
-                </div>
-                <div class="glass px-12 py-8 rounded-[2rem] border-b-4 border-slate-700">
-                    <p class="text-[9px] font-bold text-slate-400 mb-2 uppercase tracking-widest">Student</p>
-                    <p class="font-black text-xl text-slate-100">Atharrv Bhatnagar</p>
-                    <p class="text-[10px] text-slate-500 mt-1">23FE10CSE00267</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="py-12 text-center bg-black/40 border-t border-slate-900">
-        <p class="text-slate-600 text-[10px] font-bold tracking-[0.3em] uppercase mb-2">Manipal University Jaipur</p>
-        <p class="text-slate-500 text-[9px] font-medium tracking-[0.2em] uppercase opacity-50">Department of Computer Science & Engineering • 2026</p>
-    </footer>
-
-    <script>
-        // TIMER LOGIC
-        let sec = 0;
-        let timer = null;
-        function startTimer() {
-            timer = setInterval(() => {
-                sec++;
-                let m = Math.floor(sec / 60);
-                let s = sec % 60;
-                document.getElementById('displayTime').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-
-                if (sec >= 480 && sec < 600) {
-                    document.getElementById('timerContainer').classList.add('timer-warning');
-                    document.getElementById('timerIcon').classList.replace('fa-hourglass-start', 'fa-hourglass-half');
-                } else if (sec >= 600) {
-                    clearInterval(timer);
-                    document.getElementById('timerContainer').classList.replace('timer-warning', 'timer-stop');
-                    document.getElementById('displayTime').innerText = "10:00";
-                    document.getElementById('timerIcon').classList.replace('fa-hourglass-half', 'fa-hourglass-end');
-                }
-            }, 1000);
+        if (sec >= 480 && sec < 600) {
+          document.getElementById("timerContainer").classList.add("timer-warning");
+          document.getElementById("timerIcon").classList.replace("fa-hourglass-start", "fa-hourglass-half");
+        } else if (sec >= 600) {
+          clearInterval(timer);
+          document.getElementById("timerContainer").classList.replace("timer-warning", "timer-stop");
+          document.getElementById("displayTime").innerText = "10:00";
+          document.getElementById("timerIcon").classList.replace("fa-hourglass-half", "fa-hourglass-end");
         }
+      }, 1000);
+    }
 
-        // RESULTS CHART
-        const ctx = document.getElementById('resultsChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Manual System', 'Our System'],
-                datasets: [{
-                    data: [65, 90],
-                    backgroundColor: ['#1e293b', '#3b82f6'],
-                    borderRadius: 15,
-                    barThickness: 50
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { 
-                    y: { beginAtZero: true, grid: { color: '#ffffff05' }, ticks: { color: '#475569' } },
-                    x: { grid: { display: false }, ticks: { color: '#475569' } }
-                }
-            }
-        });
-    </script>
+    // RESULTS CHART (illustrative)
+    const ctx = document.getElementById("resultsChart").getContext("2d");
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["Manual/Sheets", "Separate Tools", "Our HRMS"],
+        datasets: [
+          {
+            label: "Operational Efficiency (Higher is better)",
+            data: [55, 70, 90],
+            backgroundColor: ["#1e293b", "#334155", "#3b82f6"],
+            borderRadius: 15,
+            barThickness: 48
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, labels: { color: "#94a3b8" } }
+        },
+        scales: {
+          y: { beginAtZero: true, grid: { color: "#ffffff08" }, ticks: { color: "#475569" } },
+          x: { grid: { display: false }, ticks: { color: "#475569" } }
+        }
+      }
+    });
+  </script>
 </body>
 </html>
-
-
-
-
